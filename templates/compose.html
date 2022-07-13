@@ -1,0 +1,31 @@
+<html>
+	<head>
+		<title>Compose Message</title>
+	</head>
+	<body>
+		{% for folder in folders %}
+		<a href="/folder/{{ folder }}/page/1">{{ folder }}</a>{% if not loop.last %} | {% endif %}
+		{% endfor %}
+		<hr />
+		<form action="/send">
+			To:
+			<br />
+			<input name="recipients" value="{% if recipients %}{{ recipients }}{% endif %}" size="85" />
+			<br />
+			Subject:
+			<br />
+			<input name="subject" value="{% if subject %}{{ subject }}{% endif %}" size="85" />
+			<br />
+			Body:
+			<br />
+			<textarea name="body" cols=80 rows=24>
+			{% if body %}{{ body }}{% endif %}
+			</textarea>
+			<br />
+			Attachments:
+			<br />
+			<input name="attachments" type="file" multiple />
+			<input type="submit" value="Send Message" />
+		</form>
+	</body>
+</html>

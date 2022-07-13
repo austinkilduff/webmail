@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<title>{{ current_folder }}</title>
+	</head>
+	<body>
+		{% for folder in folders %}
+		<a href="/folder/{{ folder }}/page/1">{{ folder }}</a>{% if not loop.last %} | {% endif %}
+		{% endfor %}
+		<hr />
+		<a href="/compose">Compose Message</a>
+		<hr />
+		{% for message in messages %}
+		<a href="/folder/{{ current_folder }}/message/{{ message.uid }}">{{ message.from_ }} | {{ message.subject }} | {{ message.date_str }}</a><br />
+		{% endfor %}
+		<hr />
+		{% if current_page > 1 %}<a href="/folder/{{ current_folder }}/page/{{ current_page - 1 }}">Newer</a> | {% endif %}
+		<a href="/folder/{{ current_folder }}/page/{{ current_page + 1 }}">Older</a>
+	</body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<title>{{ message.subject }}</title>
+	</head>
+	<body>
+		{% for folder in folders %}
+		<a href="/folder/{{ folder }}/page/1">{{ folder }}</a>{% if not loop.last %} | {% endif %}
+		{% endfor %}
+		<hr />
+		<a href="/compose/{{ current_folder }}/{{ message.uid }}">Reply All</a>
+		<hr />
+		From: {{ message.from_ }}
+		<br />
+		Subject: {{ message.subject }}
+		<br />
+		Date: {{ message.date_str }}
+		<br />
+		To: {{ recipients }}
+		<hr />
+		{{ body }}
+		<hr />
+		{% for attachment in message.attachments %}
+		<a href="/folder/{{ current_folder }}/message/{{ message.uid }}/attachment/{{ attachment.filename }}">{{ attachment.filename }}</a>{% if not loop.last %} | {% endif %}
+		{% endfor %}
+	</body>
+</html>
