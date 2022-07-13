@@ -55,7 +55,7 @@ def message(folder, message_id):
         message = [m for m in mailbox.fetch(A(uid=message_id))][0]
         recipients = message.to + message.cc + message.bcc
         recipients = ", ".join(recipients)
-        soup = BeautifulSoup(message.html, 'html.parser')
+        soup = BeautifulSoup(message.html, "html.parser")
         return render_template("message.html", folders=folders, current_folder=folder, message=message, recipients=recipients, body=soup.get_text())
 
 @app.route("/folder/<folder>/message/<message_id>/attachment/<filename>")
@@ -91,9 +91,10 @@ def reply_all(folder, message_id):
         recipients = (message.from_, ) + message.to + message.cc + message.bcc
         recipients = list(filter(lambda email: email != email_address, recipients))
         recipients = ", ".join(recipients)
-        soup = BeautifulSoup(message.html, 'html.parser')
+        soup = BeautifulSoup(message.html, "html.parser")
         return render_template("compose.html", folders=folders, message=message, subject=subject, recipients=recipients, body=soup.get_text())
 
+# TODO: save attachments correctly, finish Envelope stuff
 @app.route("/send", methods=["POST"])
 def send():
     if request.method == "POST":
@@ -105,7 +106,6 @@ def send():
         message = Envelope(body).subject(subject)
         for attachment in attachments:
             attachment.save(attachment.filename)
-
 
 if __name__ == "__main__":
     app.run(debug=True)
