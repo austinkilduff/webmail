@@ -6,18 +6,15 @@ from flask_httpauth import HTTPBasicAuth
 from imap_tools import A, U, MailBox
 import os
 import requests
-from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
 
 page_size = 20
 
-users = {email_address: generate_password_hash(password)}
-
 @auth.verify_password
 def verify_password(email, pwd):
-    if email in users and check_password_hash(users[email], pwd):
+    if email == email_address and pwd == password:
         return email
 
 @app.route("/")
